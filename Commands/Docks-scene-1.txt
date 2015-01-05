@@ -1,0 +1,619 @@
+Docks: Scene 1 - Toran execution
+================================
+
+
+Test and Debug
+--------------
+
+# Clear entities for testing.
+/kill @e[r=80,name=Lurker]
+/kill @e[type=ArmorStand,r=25,Name=Toran]
+/kill @e[type=Villager,r=25]
+/kill @e[type=PigZombie,r=25]
+
+# Summon actors
+/summon Villager ~-1.5 ~7.5 ~20.5 {CustomName:"Salkind",CustomNameVisible:1,Profession:2,Career:0,CareerLevel:20,Offers:{Recipes:[{maxUses:2147483647,uses:0,buy:{id:melon_seeds,Count:10},sell:{id:paper,Count:1,tag:{display:{Name:Tax receipt}}}}]},Age:500000,Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[80f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+/summon PigZombie ~-0.8 ~7.5 ~18 {CustomName:"Mordea",CustomNameVisible:1,Equipment:[{},{id:leather_boots,Count:1,tag:{display:{color:16777215}}},{id:leather_leggings,Count:1,tag:{display:{color:16777215}}},{id:leather_chestplate,Count:1,tag:{display:{color:16777215}}},{id:golden_helmet,Count:1}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[90f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+/summon PigZombie ~-1 ~7.5 ~16 {CustomName:"Tarna",CustomNameVisible:1,Equipment:[{id:iron_hoe,Count:1,tag:{display:{Name:Halberd}}},{id:iron_boots,Count:1},{id:leather_leggings,Count:1,tag:{display:{color:3158064}}},{id:leather_chestplate,Count:1,tag:{display:{color:2173066}}},{id:iron_helmet,Count:1}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[0f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+/summon ArmorStand ~ ~7.5 ~21 {CustomName:"Toran",CustomNameVisible:1,ShowArms:1,Invulnerable:1,NoBasePlate:1,NoGravity:1,PersistenceRequired:1,Equipment:[{},{id:leather_boots,Count:1,tag:{display:{color:4334090}}},{id:leather_leggings,Count:1,tag:{display:{color:15234590}}},{id:leather_chestplate,Count:1,tag:{display:{color:16384}}},{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}],Pose:{Body:[0f,0f,0f],LeftArm:[45f,0f,25f],RightArm:[45f,0f,-25f],LeftLeg:[10f,0f,0f],RightLeg:[-10f,0f,0f],Head:[0f,0f,0f]},DisabledSlots:2039583}
+/summon Villager ~-1 ~7.5 ~16 {CustomName:"Rhian",CustomNameVisible:1,Profession:3,Career:0,CareerLevel:20,Offers:{Recipes:[{maxUses:2147483647,uses:0,buy:{id:gold_nugget,Count:1},sell:{id:melon_seeds,Count:2}}]},Age:500000,Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[-25f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+/summon PigZombie ~ ~7.5 ~19 {CustomName:"Darion",CustomNameVisible:1,Equipment:[{},{id:iron_boots,Count:1},{id:iron_leggings,Count:1},{id:iron_chestplate,Count:1},{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[-45f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+/summon PigZombie ~1 ~7.5 ~21.5 {CustomName:"Shaana",CustomNameVisible:1,Equipment:[{id:iron_axe,Count:1},{id:leather_boots,Count:1,tag:{display:{color:2368548}}},{id:leather_leggings,Count:1,tag:{display:{color:2368548}}},{id:leather_chestplate,Count:1,tag:{display:{color:2368548}}},{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[-90f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+# Set chopping block
+/setblock -118 66 1259 minecraft:log 1
+
+# Init score on Tarna for managing the event. It will get set to 0 when the event starts.
+# The score value of 10,000+ is outside the event sequence range. Its needed to keep the event frame value ticking without actually running any of the event sequence.
+/scoreboard players set @e[r=30,name=Tarna] EventFrame 10000
+
+# Game flags used to check if the event should run.
+# The event will only run for Adventure mode players who have MetDevon.
+# Toggle MetDevon score flag.
+/scoreboard players set @p MetDevon 0
+/scoreboard players set @p MetDevon 1
+# Toggle MetTarna score flag.
+/scoreboard players set @p MetTarna 0
+/scoreboard players set @p MetTarna 1
+
+# For debugging, toggle the event score display on the sidebar
+/scoreboard objectives setdisplay sidebar EventFrame
+/scoreboard objectives setdisplay sidebar
+
+# For debugging, show the MetDevon or MetTarna score flag on the side bar
+/scoreboard objectives setdisplay sidebar MetDevon
+/scoreboard objectives setdisplay sidebar MetTarna
+
+
+
+Event Sequence Hopper Fill Clock
+================================
+
+# Transfer cooldown 20 ticks is equal to about 1 second.
+# Fill commands seem to fill from West to East, then North to South.
+
+# Hopper comparitor outputs:
+/fill -110 55 1233 -160 55 1200 minecraft:lapis_block 0 replace minecraft:redstone_block
+/fill -110 55 1233 -160 55 1200 minecraft:redstone_block 0 replace minecraft:lapis_block
+
+# Second level output commands:
+/blockdata ~-1 ~-1 ~ {TransferCooldown:1}
+/blockdata ~1 ~-1 ~ {TransferCooldown:1}
+
+
+
+Event Sequence Commands
+=======================
+
+# Event will start when a player is near Tarna and has met Devon
+/execute @e[r=30,name=Tarna] ~ ~ ~ /scoreboard players test @a[r=5,m=2,] MetDevon 1 1
+^ Comparitor output:
+# Prevent event from starting more than once. This command will only output a signal when the event waiting to be started.
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 10000 900000
+^ Comparitor output:
+# Start the event. Tarna will manage EventFrame
+/scoreboard players set @e[r=50,name=Tarna] EventFrame 0
+# Turn Tarna toward the approaching player
+/tp @e[r=50,name=Tarna] ~ ~ ~-0.1 180 0
+
+
+# Always increment the event frame score.
+/scoreboard players add @e[r=50,name=Tarna] EventFrame 1
+
+
+# Auto moving controllers
+# Move if has score
+/tp @e[r=50,score_MoveWest_min=1] ~-1 ~ ~
+/tp @e[r=50,score_MoveEast_min=1] ~1 ~ ~
+/tp @e[r=50,score_MoveSouth_min=1] ~ ~ ~1
+/tp @e[r=50,score_MoveNorth_min=1] ~ ~ ~-1
+# Decrement the scores
+/scoreboard players remove @e[r=50,score_MoveWest_min=1] MoveWest 1
+/scoreboard players remove @e[r=50,score_MoveEast_min=1] MoveEast 1
+/scoreboard players remove @e[r=50,score_MoveSouth_min=1] MoveSouth 1
+/scoreboard players remove @e[r=50,score_MoveNorth_min=1] MoveNorth 1
+
+
+# Actual event sequence actions start from here.
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 2 2
+^ Comparitor output:
+# Salkind speak
+/execute @e[r=50,name=Salkind] ~ ~ ~ /tellraw @a[r=16] {"text":"<Salkind> ","extra":[{"text":"Toran, you have been accused of blasphemy against our Lady Mordea and sentenced to death by beheading... Do you have any final words?","color":"blue"}]}
+# Continue the signal (on top of command block)
+<repeater @1>
+# Play speak sound
+/execute @e[r=50,name=Salkind] ~ ~ ~ /playsound mob.villager.haggle @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Salkind] ~ ~ ~ ~ 20
+# Turn Mordea to face Toran
+/tp @e[r=50,name=Mordea] ~ ~ ~ 0 0
+# Pause then un-nod head to show end speaking
+<repeater @4>
+/tp @e[r=50,name=Salkind] ~ ~ ~ ~ 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 10 10
+^ Comparitor output:
+# Toran speak
+/execute @e[r=50,name=Toran] ~ ~ ~ /tellraw @a[r=16] {"text":"<Toran> ","extra":[{"text":"I shall die as I have lived... with honor. When I face Lithos, he will not find -me- wanting.","color":"yellow"}]}
+/execute @e[r=50,name=Toran] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+# Continue the signal (on top of command block)
+<repeater @1>
+# Play speak sound
+/execute @e[r=50,name=Toran] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+# Nod head to show start speaking
+/entitydata @e[r=50,name=Toran] {Pose:{Head:[20f,0f,0f]}}
+<repeater @4>
+# Pause then un-nod head to show end speaking
+/entitydata @e[r=50,name=Toran] {Pose:{Head:[0f,0f,0f]}}
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 20 20
+^ Comparitor output:
+# Salkind speak
+/execute @e[r=50,name=Salkind] ~ ~ ~ /tellraw @a[r=16] {"text":"<Salkind> ","extra":[{"text":"A man of honor would not have insulted his Lady with seditious rumors, knave!","color":"blue"}]}
+# Continue the signal (on top of command block)
+<repeater @1>
+# Play speak sound
+/execute @e[r=50,name=Salkind] ~ ~ ~ /playsound mob.villager.no @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Salkind] ~ ~ ~ ~ 20
+# Pause then un-nod head to show end speaking
+<repeater @4>
+/tp @e[r=50,name=Salkind] ~ ~ ~ ~ 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 30 30
+^ Comparitor output:
+# Mordea speak
+/execute @e[r=50,name=Mordea] ~ ~ ~ /tellraw @a[r=16] {"text":"<Mordea> ","extra":[{"text":"I fear that Lithos will not find you at all... for your grave shall be a watery one. The Lurker is not kind to the ones she... acquires.","color":"gold"}]}
+# Continue the signal (on top of command block)
+<repeater @1>
+# Play speak sound
+/execute @e[r=50,name=Mordea] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Mordea] ~-0.1 ~ ~0.5 -30 20
+# Pause then un-nod head to show end speaking
+<repeater @4>
+/tp @e[r=50,name=Mordea] ~ ~ ~ 30 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 40 40
+^ Comparitor output:
+# Turn Tarna starting
+/tp @e[r=50,name=Tarna] ~ ~ ~0.5 270 0
+<repeater @4>
+# Turn Tarna finish facing Mordea
+/tp @e[r=50,name=Tarna] ~ ~ ~0.5 320 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 45 45
+^ Comparitor output:
+# Tarna speak
+/execute @e[r=50,name=Tarna] ~ ~ ~ /tellraw @a[r=16] {"text":"<Tarna> ","extra":[{"text":"This is forbidden, Lady. The Ritual of Interment is sacred.","color":"green"}]}
+# Continue the signal (on top of command block)
+<repeater @1>
+# Play speak sound
+/execute @e[r=50,name=Tarna] ~ ~ ~ /playsound mob.villager.no @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 20
+# Pause then un-nod head to show end speaking
+<repeater @4>
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 55 55
+^ Comparitor output:
+# Mordea speak
+/execute @e[r=50,name=Mordea] ~ ~ ~ /tellraw @a[r=16] {"text":"<Mordea> ","extra":[{"text":"Do not question my decisions, Tarna. I am sure that Lithos would not want this one's worthless spirit in his domain.","color":"gold"}]}
+# Continue the signal (on top of command block)
+<repeater @1>
+# Play speak sound
+/execute @e[r=50,name=Mordea] ~ ~ ~ /playsound mob.villager.yes @a[r=16]
+# Turn to face Tarna
+# Nod head to show start speaking
+/tp @e[r=50,name=Mordea] ~ ~ ~ 135 20
+# Pause then un-nod head to show end speaking
+<repeater @4>
+/tp @e[r=50,name=Mordea] ~ ~ ~ ~ 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 70 70
+^ Comparitor output:
+# Rhian speak
+/execute @e[r=50,name=Rhian] ~ ~ ~ /tellraw @a[r=16] {"text":"<Rhian> ","extra":[{"text":"No!!!!","color":"blue"}]}
+# Continue the signal (on top of command block)
+<repeater @1>
+# Play speak sound
+/execute @e[r=50,name=Rhian] ~ ~ ~ /playsound mob.villager.no @a[r=16]
+# Move forward a small step
+# Nod head to show start speaking
+/tp @e[r=50,name=Rhian] ~ ~ ~0.5 0 20
+# Pause then un-nod head to show end speaking
+<repeater @4>
+/tp @e[r=50,name=Rhian] ~ ~ ~0.5 0 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 71 71
+^ Comparitor output:
+# Darion turn to stop Rhian
+/tp @e[r=50,name=Darion] ~ ~ ~-0.1 180 20
+<repeater @4>
+# Darion draw sword
+/replaceitem entity @e[r=50,name=Darion] slot.weapon minecraft:iron_sword 1 0
+<repeater @4>
+# Darion speak
+/execute @e[r=50,name=Darion] ~ ~ ~ /tellraw @a[r=16] {"text":"<Darion> ","extra":[{"text":"Back, woman!","color":"dark_green"}]}
+# Play speak sound
+/execute @e[r=50,name=Darion] ~ ~ ~ /playsound mob.villager.haggle @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Darion] ~ ~ ~ ~ 20
+<repeater @4>
+# Pause then un-nod head to show end speaking
+/tp @e[r=50,name=Darion] ~ ~ ~ ~ 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 80 80
+^ Comparitor output:
+# Mordea turn to face Toran
+/tp @e[r=50,name=Mordea] ~ ~ ~0.1 0 0
+<repeater @4>
+# Mordea speak
+/execute @e[r=50,name=Mordea] ~ ~ ~ /tellraw @a[r=16] {"text":"<Mordea> ","extra":[{"text":"Perform your task, Executioner!","color":"gold"}]}
+# Play speak sound
+/execute @e[r=50,name=Mordea] ~ ~ ~ /playsound mob.villager.yes @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Mordea] ~ ~ ~ 30 20
+# Pause then un-nod head to show end speaking
+<repeater @4>
+/tp @e[r=50,name=Mordea] ~ ~ ~ ~ 0
+<repeater @4>
+# Mordea casts thunderstorm spell
+/execute @e[r=50,name=Mordea] ~ ~ ~ /particle spell ~ ~2 ~ 0 0.25 0 0.9 5
+/weather thunder 300
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 90 90
+^ Comparitor output:
+# Toran start to lower head
+/entitydata @e[r=50,name=Toran] {Pose:{Head:[40f,0f,0f]}}
+<repeater @4>
+# Toran finish lowering head
+/entitydata @e[r=50,name=Toran] {Pose:{Head:[80f,0f,0f]}}
+<repeater @4>
+# Toran move towards block
+/tp @e[r=50,name=Toran] ~ ~ ~0.2
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 100 100
+^ Comparitor output:
+# Shaana prepare to chop
+/tp @e[r=50,name=Shaana] ~-0.1 ~ ~ 270 -20
+# Salkind face toward Toran
+/tp @e[r=50,name=Salkind] ~ ~ ~ 30 0
+# Play a small drum beat
+<repeater @1>
+/execute @e[r=55,name=Toran] ~ ~ ~ /playsound note.snare @a[r=16] ~ ~ ~ 1 1 1
+<repeater @1>
+/execute @e[r=55,name=Toran] ~ ~ ~ /playsound note.snare @a[r=16] ~ ~ ~ 1 1 1
+<repeater @1>
+/execute @e[r=55,name=Toran] ~ ~ ~ /playsound note.snare @a[r=16] ~ ~ ~ 1 1 1
+<repeater @1>
+/execute @e[r=55,name=Toran] ~ ~ ~ /playsound note.snare @a[r=16] ~ ~ ~ 1 1 1
+<repeater @1>
+/execute @e[r=55,name=Toran] ~ ~ ~ /playsound note.snare @a[r=16] ~ ~ ~ 1 1 1
+<repeater @2>
+/execute @e[r=55,name=Toran] ~ ~ ~ /playsound note.snare @a[r=16] ~ ~ ~ 1 1 1
+<repeater @2>
+/execute @e[r=55,name=Toran] ~ ~ ~ /playsound note.snare @a[r=16] ~ ~ ~ 1 1 1
+<repeater @3>
+/execute @e[r=55,name=Toran] ~ ~ ~ /playsound note.bd @a[r=16] ~ ~ ~ 1 1 1
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 110 110
+^ Comparitor output:
+# Shaana strike
+/tp @e[r=50,name=Shaana] ~0.6 ~ ~ 270 20
+<repeater @4>
+# Toran hit, play hurt sound
+/execute @e[r=50,name=Toran] ~ ~ ~ /playsound mob.villager.hit @a[r=16]
+# Spawn blood particles
+/execute @e[r=50,name=Toran] ~ ~ ~ /particle iconcrack_260_0 ~ ~1.5 ~0.5 0.35 0 0.35 0.1 50
+<repeater @1>
+# Remove Toran's head
+/entitydata @e[r=50,name=Toran] {Equipment:[{},{id:leather_boots,Count:1,tag:{display:{color:4334090}}},{id:leather_leggings,Count:1,tag:{display:{color:15234590}}},{id:leather_chestplate,Count:1,tag:{display:{color:16384}}},{}]}
+# Put head on block
+/setblock -118 67 1259 minecraft:skull 3 replace {ExtraType:MHF_Steve,SkullType:3f}
+# Hide Toran's armour stand head post
+/entitydata @e[r=50,name=Toran] {Pose:{Head:[180f,0f,0f]}}
+# Rhian head down and on knees (slightly in ground)
+/tp @e[r=50,name=Rhian] ~ ~-0.5 ~0.5 0 60
+# Rhian speak
+/execute @e[r=50,name=Rhian] ~ ~ ~ /tellraw @a[r=16] {"text":"<Rhian> ","extra":[{"text":"No...","color":"blue"}]}
+# Play speak sound
+/execute @e[r=50,name=Rhian] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+<repeater @1>
+# Darion sheath weapon
+/replaceitem entity @e[r=50,name=Darion] slot.weapon minecraft:air 1 0
+# Darion start turning toward Toran
+/tp @e[r=50,name=Darion] ~ ~ ~ 270 0
+<repeater @4>
+# Darion turn to face Toran
+/tp @e[r=50,name=Darion] ~ ~ ~ 0 0
+# Rhian sobbing head bob
+/tp @e[r=50,name=Rhian] ~ ~ ~ ~ 40
+<repeater @4>
+# Rhian sobbing head bob
+/tp @e[r=50,name=Rhian] ~ ~ ~ ~ 60
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 113 113
+^ Comparitor output:
+<repeater @1>
+# Simulate head falling (as block)
+/setblock -118 67 1259 minecraft:air 3 replace
+/setblock -118 66 1260 minecraft:skull 3 replace {ExtraType:MHF_Villager,SkullType:3f}
+<repeater @4>
+<repeater @2>
+/setblock -118 66 1260 minecraft:air 3 replace
+/setblock -118 66 1261 minecraft:skull 3 replace {ExtraType:MHF_Villager,SkullType:3f}
+<repeater @4>
+<repeater @2>
+/setblock -118 66 1261 minecraft:air 3 replace
+/setblock -118 65 1262 minecraft:skull 3 replace {ExtraType:MHF_Villager,SkullType:3f}
+<repeater @4>
+<repeater @1>
+/setblock -118 65 1262 minecraft:air 3 replace
+/setblock -118 64 1263 minecraft:skull 3 replace {ExtraType:MHF_Villager,SkullType:3f}
+<repeater @4>
+<repeater @1>
+/setblock -118 64 1263 minecraft:air 3 replace
+# Drop a head item into water
+/summon Item -118 64 1263 {Item:{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}}
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 115 115
+^ Comparitor output:
+# Lighting bolt hits water
+/execute @e[r=50,name=Toran] ~ ~ ~ /summon LightningBolt ~ ~-2 ~15
+<repeater @4>
+# Summon a Lurker (guardian fish thing)
+/execute @e[r=50,name=Toran] ~ ~ ~ /summon Guardian ~ ~-2 ~15 {CustomName:"Lurker",CustomNameVisible:1,Invulnerable:1}
+<repeater @4>
+# Rhian comment
+/execute @e[r=50,name=Rhian] ~ ~ ~ /tellraw @a[r=16] {"text":"<Rhian> ","extra":[{"text":"My husband...","color":"blue"}]}
+# Play speak sound
+/execute @e[r=50,name=Rhian] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+# Another blood squirt
+/execute @e[r=50,name=Toran] ~ ~ ~ /particle iconcrack_260_0 ~ ~1.5 ~0.5 0.35 0 0.35 0.1 50
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+# Another blood squirt
+/execute @e[r=50,name=Toran] ~ ~ ~ /particle iconcrack_260_0 ~ ~1.5 ~0.5 0.35 0 0.35 0.1 50
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 140 140
+^ Comparitor output:
+# Stop thunderstorm and keep weather clear for a very long time
+/weather clear 1000000
+<repeater @4>
+# Salkind starts turning
+/tp @e[r=50,name=Salkind] ~ ~ ~ 90 0
+# Another blood squirt
+/execute @e[r=50,name=Toran] ~ ~ ~ /particle iconcrack_260_0 ~ ~1.5 ~0.5 0.35 0 0.35 0.1 50
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 150 150
+^ Comparitor output:
+# Salkind finish turning
+/tp @e[r=50,name=Salkind] ~ ~ ~ 180 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 170 170
+^ Comparitor output:
+# Tarna start turning
+/tp @e[r=50,name=Tarna] ~-1 ~ ~-1 270 0
+<repeater @4>
+# Tarna speak
+/execute @e[r=50,name=Tarna] ~ ~ ~ /tellraw @a[r=16] {"text":"<Tarna> ","extra":[{"text":"Stand aside! Let Lady Mordea pass!","color":"green"}]}
+# Play speak sound
+/execute @e[r=50,name=Tarna] ~ ~ ~ /playsound mob.villager.haggle @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 20
+<repeater @4>
+# Pause then un-nod head to show end speaking
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 0
+<repeater @4>
+<repeater @4>
+# Mordea starts turning
+/tp @e[r=50,name=Mordea] ~ ~ ~ 90 0
+<repeater @4>
+<repeater @4>
+# Mordea finish turning
+/tp @e[r=50,name=Mordea] ~ ~ ~ 180 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 175 175
+^ Comparitor output:
+# Mordea starts leaving
+/scoreboard players set @e[r=50,name=Mordea] MoveNorth 40
+<repeater @4>
+<repeater @4>
+# Salkind starts leaving
+/scoreboard players set @e[r=50,name=Salkind] MoveNorth 40
+<repeater @4>
+<repeater @4>
+# Darion turns and starts walking to other side of dock
+/tp @e[r=50,name=Darion] ~1 ~ ~ 270 0
+<repeater @4>
+/tp @e[r=50,name=Darion] ~1 ~ ~-0.5 245 0
+<repeater @4>
+/tp @e[r=50,name=Darion] ~1 ~ ~-0.5 180 0
+<repeater @4>
+# Darion starts leaving
+/scoreboard players set @e[r=50,name=Darion] MoveNorth 40
+# Salkind needs to side step slightly to miss light post
+/tp @e[r=50,name=Salkind] ~-0.5 ~ ~ 180 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 190 190
+^ Comparitor output:
+# Shaana turn and start to move away
+/tp @e[r=50,name=Shaana] ~ ~ ~ 235 0
+<repeater @4>
+/tp @e[r=50,name=Shaana] ~ ~ ~-1
+<repeater @4>
+/tp @e[r=50,name=Shaana] ~0.25 ~ ~-1
+<repeater @4>
+/tp @e[r=50,name=Shaana] ~0.5 ~ ~-1
+<repeater @4>
+/tp @e[r=50,name=Shaana] ~1 ~ ~-0.5
+<repeater @4>
+/tp @e[r=50,name=Shaana] ~0.5 ~ ~-0.5
+<repeater @4>
+/tp @e[r=55,name=Shaana] ~0.5 ~ ~-1 180 0
+# Shaana leaves
+/scoreboard players set @e[r=55,name=Shaana] MoveNorth 40
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 200 200
+^ Comparitor output:
+# Rhian start moving to Toran
+/tp @e[r=50,name=Rhian] ~ ~0.5 ~0.5 0 0
+<repeater @4>
+/tp @e[r=50,name=Rhian] ~ ~ ~0.5
+<repeater @4>
+/tp @e[r=50,name=Rhian] ~ ~ ~1
+<repeater @4>
+/tp @e[r=50,name=Rhian] ~0.4 ~ ~1 310 40
+<repeater @4>
+/tp @e[r=50,name=Rhian] ~0.4 ~-0.5 ~0.5 270 60
+# Rhian sob audio
+/execute @e[r=50,name=Rhian] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 200 200
+^ Comparitor output:
+# Tarna start talking to Avatar
+/execute @e[r=50,name=Tarna] ~ ~ ~ /tellraw @a[r=16] {"text":"<Tarna> ","extra":[{"text":"Halt! I have never seen you before, stranger. Identify yourself and your business in Tenebrae.","color":"green"}]}
+# Play speak sound
+/execute @e[r=50,name=Tarna] ~ ~ ~ /playsound mob.villager.haggle @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 20
+<repeater @4>
+# Pause then un-nod head to show end speaking
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 210 210
+^ Comparitor output:
+# Avatar reply
+/execute @e[r=50,name=Tarna] ~ ~ ~ /tellraw @a[r=16] {"text":"<Avatar> ","extra":[{"text":"What just happened here?","color":"dark_red"}]}
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 220 220
+^ Comparitor output:
+# Tarna speak
+/execute @e[r=50,name=Tarna] ~ ~ ~ /tellraw @a[r=16] {"text":"<Tarna> ","extra":[{"text":"The execution is none of your business. Just be glad that a treasonous, despicable criminal has been properly punished.","color":"green"}]}
+# Play speak sound
+/execute @e[r=50,name=Tarna] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 20
+<repeater @4>
+# Pause then un-nod head to show end speaking
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 230 230
+^ Comparitor output:
+/execute @e[r=50,name=Tarna] ~ ~ ~ /tellraw @a[r=16] {"text":"<Tarna> ","extra":[{"text":"Now answer the question!","color":"green"}]}
+# Play speak sound
+/execute @e[r=50,name=Tarna] ~ ~ ~ /playsound mob.villager.haggle @a[r=16]
+# Nod head to show start speaking
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 20
+<repeater @4>
+# Pause then un-nod head to show end speaking
+/tp @e[r=50,name=Tarna] ~ ~ ~ ~ 0
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 240 240
+^ Comparitor output:
+# Avatar reply
+/execute @e[r=50,name=Tarna] ~ ~ ~ /tellraw @a[r=16] {"text":"<Avatar> ","extra":[{"text":"I go by Avatar.","color":"dark_red"}]}
+# Set MetTarna score flag
+/scoreboard players set @a[r=55,type=Player] MetTarna 1
+
+
+# Event frame
+/scoreboard players test @e[r=50,name=Tarna] EventFrame 250 250
+^ Comparitor output:
+# To be continued...
+/execute @e[r=50,name=Tarna] ~ ~ ~ /tellraw @a[r=16] {"text":"","extra":[{"text":"* To be continued...","color":"dark_gray","italic":"true"}]}
+
+
+# End of main event sequence. Below here is actor cleanup.
+
+
+# Cleanup Mordea
+/testfor @e[r=20,name=Mordea,score_MoveNorth=0]
+^ Comparitor output:
+# Reset scores
+/scoreboard players reset @e[r=30,name=Mordea]
+<repeater @1>
+# Teleport under world to delete
+/tp @e[r=25,name=Mordea] ~ -10 ~
+
+
+# Cleanup Salkind
+/testfor @e[r=20,name=Salkind,score_MoveNorth=0]
+^ Comparitor output:
+# Reset scores
+/scoreboard players reset @e[r=30,name=Salkind]
+<repeater @1>
+# Teleport under world to delete
+/tp @e[r=25,name=Salkind] ~ -10 ~
+
+
+# Cleanup Darion
+/testfor @e[r=20,name=Darion,score_MoveNorth=0]
+^ Comparitor output:
+# Reset scores
+/scoreboard players reset @e[r=30,name=Darion]
+<repeater @1>
+# Teleport under world to delete
+/tp @e[r=25,name=Darion] ~ -10 ~
+
+
+# Cleanup Shaana
+/testfor @e[r=20,name=Shaana,score_MoveNorth=0]
+^ Comparitor output:
+# Reset scores
+/scoreboard players reset @e[r=30,name=Shaana]
+<repeater @1>
+# Teleport under world to delete
+/tp @e[r=25,name=Shaana] ~ -10 ~
+
+
+# Cleanup Tarna, Toran and Rhian when player leaves
+/testfor @p[m=2,r=15,score_MetTarna_min=1]
+^ Comparitor output:
+/scoreboard players reset @e[r=60,name=Tarna]
+<repeater @1>
+# Teleport under world to delete
+/tp @e[r=60,name=Toran] ~ -10 ~
+/tp @e[r=60,name=Tarna] ~ -10 ~
+/tp @e[r=60,name=Rhian] ~ -10 ~
+# Remove chopping block
+/setblock -118 66 1259 minecraft:air 0
+<repeater @1>
+# Disable even hopper clock
+/setblock -101 54 1231 minecraft:redstone_block

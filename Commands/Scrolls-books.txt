@@ -1,0 +1,6 @@
+Scrolls
+=======
+
+Scroll in barrel at docks:
+/give @p minecraft:written_book 1 0 {title:'scroll',author:'',generation:0,pages:["{text:'Most Honorable Lady Mordea,\n',color:dark_blue,extra:[{text:'I have heard that the Skull of Quakes has been removed from the Upper Catacombs. I had believed that it would be safe within the Catacombs, for it is the only place it is used. Pray tell me, my Lady, what do you suggest I do about this situation?',color:dark_blue}]}","{text:'I have heard rumors that it presently may be within the Shrine, but i have grave doubts about it. I await your swift answer and am assured of your graciousness in this matter.\n\n    Lieutenant Vittek',color:dark_blue}"]}
+

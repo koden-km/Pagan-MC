@@ -1,0 +1,327 @@
+Pagan Intro
+===========
+
+# Buy Ultima 8 Pagan on GOG button
+/tellraw @a {"text":"","extra":[{"text":"Click here to open a browser to gog.com Ultima VIII Pagan page...","color":"dark_red","underlined":"true","clickEvent":{"action":"open_url","value":"http://www.gog.com/game/ultima_8_gold_edition"}}]}
+
+
+# Intro in progress message
+/scoreboard players test @a EventIntro 1 1
+^ Comparitor output:
+/tellraw @a[r=10,score_EventIntro=0] {color:"gray",text:"There is an introduction in progress. Try again in a minute..."}
+
+
+
+Test and Debug
+--------------
+
+# TP to target
+/tp @p -76 215 1355 0 25
+
+# Clear hand area
+/fill -81 206 1360 -71 215 1379 minecraft:air
+
+# Portal on
+/clone -86 22 1380 -66 42 1381 -86 200 1380
+
+# Portal off
+/clone -86 22 1390 -66 42 1391 -86 200 1380
+
+
+
+Main Sequence
+=============
+
+# Intro start setup
+/scoreboard players set @a[m=2,r=10] EventIntro 1
+/clear @a[score_EventIntro_min=1]
+/effect @a[score_EventIntro_min=1] minecraft:blindness 3 0 true
+/effect @a[score_EventIntro_min=1] minecraft:night_vision 0 0 true
+/gamemode spectator @a[score_EventIntro_min=1]
+
+
+# Pause briefly
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Teleport to view point
+/tp @a[score_EventIntro_min=1] -76 215 1355 0 25
+<repeater @4>
+<repeater @4>
+
+
+# Thunderclap
+/playsound ambient.weather.thunder @a[score_EventIntro_min=1] ~ ~ ~ 1 1.2 1
+<repeater @4>
+<repeater @4>
+
+
+# Drum beats
+/playsound note.bass @a[score_EventIntro_min=1] ~ ~ ~ 1 1 1
+<repeater @4>
+/playsound note.bass @a[score_EventIntro_min=1] ~ ~ ~ 1 0.55 1
+<repeater @4>
+/playsound note.bass @a[score_EventIntro_min=1] ~ ~ ~ 1 1 1
+<repeater @4>
+/playsound note.bass @a[score_EventIntro_min=1] ~ ~ ~ 1 0.55 1
+<repeater @4>
+/playsound note.bass @a[score_EventIntro_min=1] ~ ~ ~ 1 0.5 1
+<repeater @4>
+/playsound random.anvil_land @a[score_EventIntro_min=1] ~ ~ ~ 0.3 0.35 0.3
+/playsound note.bd @a[score_EventIntro_min=1] ~ ~ ~ 1 1.5 1
+/playsound portal.portal @a[score_EventIntro_min=1] ~ ~ ~ 0.5 0.5 1
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Guardian say 1
+/tellraw @a[score_EventIntro_min=1] {color:"red",text:"You have been a thorn in my side for far too long, Avatar..."}
+# Placeholder for voice audio
+/playsound pagan.guardian.intro1 @a[score_EventIntro_min=1] ~ ~ ~ 1 1 1
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Open portal
+/clone -86 22 1380 -66 42 1381 -86 200 1380
+/playsound mob.ghast.fireball @a[score_EventIntro_min=1] ~ ~ ~ 1 0.5 1
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Hand coming through
+/clone -49 28 1360 -39 37 1366 -81 206 1373
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -49 28 1360 -39 37 1370 -81 206 1369
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -49 28 1360 -39 37 1374 -81 206 1365
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -49 28 1360 -39 37 1377 -81 206 1362
+/playsound portal.portal @a[score_EventIntro_min=1] ~ ~ ~ 0.5 0.5 1
+<repeater @4>
+<repeater @4>
+<repeater @1>
+
+
+# Hand opening
+/clone -49 28 1360 -39 37 1379 -81 206 1360
+# Guardian say 2
+/tellraw @a[score_EventIntro_min=1] {color:"red",text:"Your two worlds will be crushed... Britannia first, then Earth!"}
+# Placeholder for voice audio
+/playsound pagan.guardian.intro2 @a[score_EventIntro_min=1] ~ ~ ~ 1 1 1
+# Summon Avatar prop
+/summon PigZombie -76 210 1368 {CustomName:"Avatar",CustomNameVisible:0,Equipment:[{},{id:leather_boots,Count:1,tag:{display:{Name:Avatar Boots,Lore:[A rugged pair of boots.],color:8750469}}},{id:leather_leggings,Count:1,tag:{display:{Name:Avatar Leggings,Lore:[A flexible set of leggings.],color:11250521}}},{id:leather_chestplate,Count:1,tag:{display:{Name:Avatar Tunic,Lore:[A very fine cloth tunic.],color:11206656}}},{id:leather_helmet,Count:1,tag:{display:{Name:Avatar Helm,Lore:[A sturdy helment.],color:8750469}}}],Attributes:[{Name:generic.movementSpeed,Base:0}],Silent:1,ActiveEffects:[{Id:9,Amplifier:0,Duration:200,ShowParticles:0b}]}
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -49 17 1360 -39 26 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -49 6 1360 -39 15 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -65 6 1360 -55 15 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -65 17 1360 -55 26 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -65 28 1360 -55 37 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @1>
+
+
+# Guardian say 3
+/tellraw @a[score_EventIntro_min=1] {color:"red",text:"I shall parade you before their conquered peoples, as the fallen idol of a pathetic ideal!"}
+# Placeholder for voice audio
+/playsound pagan.guardian.intro3 @a[score_EventIntro_min=1] ~ ~ ~ 1 1 1
+# Hand idle (slower timing)
+/clone -81 28 1360 -71 37 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @4>
+/clone -81 17 1360 -71 26 1379 -81 206 1360
+/playsound portal.portal @a[score_EventIntro_min=1] ~ ~ ~ 0.5 0.5 0.5
+<repeater @4>
+<repeater @4>
+<repeater @4>
+/clone -81 6 1360 -71 15 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @4>
+/clone -81 17 1360 -71 26 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @4>
+/clone -81 28 1360 -71 37 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Hand tip
+/clone -97 28 1360 -87 37 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @4>
+/clone -97 17 1360 -87 26 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -97 6 1360 -87 15 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -113 6 1360 -103 15 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -113 17 1360 -103 26 1379 -81 206 1360
+# Start bg sound again
+/playsound portal.portal @a[score_EventIntro_min=1] ~ ~ ~ 0.5 0.5 0.5
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -113 28 1360 -103 37 1379 -81 206 1360
+<repeater @4>
+<repeater @4>
+<repeater @1>
+
+
+# Hand leave
+/clone -113 28 1360 -103 37 1377 -81 206 1362
+/fill -81 206 1360 -71 215 1361 minecraft:air
+# Guardian say 4
+/tellraw @a[score_EventIntro_min=1] {color:"red",text:"I banish you to the world of Pagan!"}
+# Placeholder for voice audio
+/playsound pagan.guardian.intro4 @a[score_EventIntro_min=1] ~ ~ ~ 1 1 1
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -113 28 1360 -103 37 1374 -81 206 1365
+/fill -81 206 1360 -71 215 1364 minecraft:air
+# TP player to title screen island avatar drop view
+/tp @a[score_EventIntro_min=1] -76 100 1370 180 0
+# Give night vision for twilight effect now that the player is not high in space/sky.
+/effect @a[score_EventIntro_min=1] minecraft:night_vision 300 0 true
+# Move avatar prop back up into sky again for the title drop view. He falls to fast.
+/tp @e[type=PigZombie,x=-76,y=60,z=1368,r=20] ~ ~100 ~-20
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -113 28 1360 -103 37 1370 -81 206 1369
+/fill -81 206 1360 -71 215 1368 minecraft:air
+<repeater @4>
+<repeater @4>
+<repeater @1>
+/clone -113 28 1360 -103 37 1366 -81 206 1373
+/fill -81 206 1360 -71 215 1372 minecraft:air
+<repeater @4>
+<repeater @4>
+<repeater @1>
+
+
+# Clear hand
+/fill -81 206 1360 -71 215 1379 minecraft:air
+# Guardian say 5
+/tellraw @a[score_EventIntro_min=1] {color:"red",text:"No one here knows of the AVATAR!"}
+# Placeholder for voice audio
+/playsound pagan.guardian.intro5 @a[score_EventIntro_min=1] ~ ~ ~ 1 1 1
+# Portal off
+/clone -86 22 1390 -66 42 1391 -86 200 1380
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Show title
+/clone -98 23 1342 -53 37 1342 -98 103 1342
+# Play custom game intro title screen music
+/playsound pagan.music.intro @a[score_EventIntro_min=1] ~ ~ ~ 1 1 1
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Hide title
+/fill -98 103 1342 -53 117 1342 minecraft:air
+# TP avatar prop under the world to hide
+/tp @e[type=PigZombie,x=-76,y=60,z=1348,r=20] ~ -20 ~
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# TP to beach and prepare player for playing
+/tp @a[score_EventIntro_min=1] -83 64 1249 90 35
+/gamemode adventure @a[score_EventIntro_min=1]
+/effect @a[score_EventIntro_min=1] minecraft:nausea 6 0 true
+/effect @a[score_EventIntro_min=1] minecraft:blindness 3 0 true
+/effect @a[score_EventIntro_min=1] minecraft:night_vision 0 0 true
+/give @a[score_EventIntro_min=1] minecraft:writable_book 1 0 {display:{Name:Logbook,Lore:[by Avatar]}}
+/scoreboard players set @a[m=2] IsPlayer 1
+/spawnpoint @a[score_EventIntro_min=1] -83 64 1249 90 35
+<repeater @4>
+<repeater @4>
+<repeater @1>
+
+
+# Remove EventIntro score flag
+/scoreboard players set @a[score_EventIntro_min=1] EventIntro 0
+# Unlock intro sequence for next group of players (clears the green wool block that started the intro)
+/setblock -68 3 1395 minecraft:air
+# Enable next intro sequence to run (puts green wool block back near piston ready to push again)
+/setblock -68 3 1394 minecraft:wool 5
+
+
+# End normal sequence.
+
+
+# Debugging only, move back to command sequence to tweak settings.
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+/gamemode creative @a
+/tp @a -106 3 1380

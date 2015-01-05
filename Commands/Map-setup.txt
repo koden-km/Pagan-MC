@@ -1,0 +1,92 @@
+Adventure Map Setup Commands
+============================
+
+# Allow all commands to be run.
+/publish
+
+/defaultgamemode adventure
+
+# Some things only work in Hard mode. eg. Zombies breaking doors, spiders applying poison.
+/difficulty normal
+
+# Turn off command block output when not debugging. eg. Teleported player to x y z.
+/gamerule commandBlockOutput false
+
+# Turn off command block feedback when not debugging. eg. Game mode changed.
+/gamerule sendCommandFeedback false
+
+/gamerule doDaylightCycle false
+/gamerule doEntityDrops true
+/gamerule doFireTick false
+/gamerule doMobLoot true
+/gamerule doMobSpawning false
+/gamerule doTileDrops false
+/gamerule keepInventory true
+/gamerule logAdminCommands false
+/gamerule mobGriefing false
+/gamerule naturalRegeneration true
+/gamerule randomTickSpeed 3
+/gamerule reducedDebugInfo false
+/gamerule showDeathMessages true
+
+# Midnight moon position. Time is locked (doDaylightCycle).
+# It might be good to change this slightly to still get the East/West direction hint.
+/time set 18000
+
+# Clear weather for 1 million seconds.
+# After hydros is free, thunder storm will turned on for ~30 minutes and then weather left to automatic.
+# In the forest biome it rains quite often, which roughtly matches up to the random storms after Hydros is free.
+/weather clear 1000000
+
+
+
+Player Spawn Player Mover
+=========================
+
+# An armour stand a world spawn is used to look for newly spawned players and move them to the start room (dark DOS room).
+/summon ArmorStand -76 250 1380 {CustomName:"SpawnGuardian",CustomNameVisible:0,Invisible:1,Invulnerable:1,NoBasePlate:1,NoGravity:1,PersistenceRequired:1,DisabledSlots:2039583}
+
+# Move all players in the area around the spawn guardian.
+# It might be possible to do this with rectangle dimension coords?
+/execute @e[type=ArmorStand,name=SpawnGuardian] ~ ~ ~ /tp @a[m=2,r=25] -68 4 1388 0 0
+
+
+
+Game Logic Hopper Fill Clock
+============================
+
+# Transfer cooldown 20 ticks is equal to about 1 second.
+# Fill commands seem to fill from West to East, then North to South.
+
+# Hopper comparitor outputs:
+/fill -60 4 1390 -39 4 1409 minecraft:redstone_block 0 replace minecraft:lapis_block
+/fill -60 4 1390 -39 4 1409 minecraft:lapis_block 0 replace minecraft:redstone_block
+
+# Second level output commands:
+/blockdata ~-1 ~-1 ~ {TransferCooldown:10}
+/blockdata ~1 ~-1 ~ {TransferCooldown:10}
+
+
+
+Game Logic Loop Commands
+========================
+
+# Spawn guardian, find new spawned players and move them to the start room.
+/execute @e[type=ArmorStand,name=SpawnGuardian] ~ ~ ~ /tp @a[m=2,r=25] -68 4 1388 0 0
+
+# Poison water
+/execute @a[m=2] ~ ~ ~ detect ~ ~ ~ minecraft:water 0 /effect @p minecraft:poison 3 0 false
+
+# Night vision (creative mode)
+/effect @a[m=1] minecraft:night_vision 60 0 true
+
+# Night vision (adventure mode)
+/effect @a[m=2,score_IsPlayer_min=1] minecraft:night_vision 15 0 true
+
+# Red mushroom trap (including red flower version for daylight) [players]
+/execute @a[m=2] ~ ~ ~ detect ~ ~ ~ minecraft:red_mushroom 0 /summon Creeper ~ ~ ~ {CustomName:"fire shroom",CustomNameVisible:0,ignited:1,Fuse:1,Invulnerable:1,NoAI:1,Silent:1,ActiveEffects:[{Id:14,Amplifier:0,Duration:200,ShowParticles:0b}]}
+/execute @a[m=2] ~ ~ ~ detect ~ ~ ~ minecraft:red_flower 0 /summon Creeper ~ ~ ~ {CustomName:"fire shroom",CustomNameVisible:0,ignited:1,Fuse:1,Invulnerable:1,NoAI:1,Silent:1,ActiveEffects:[{Id:14,Amplifier:0,Duration:200,ShowParticles:0b}]}
+
+# Red mushroom trap (including red flower version) [mobs]
+/execute @e[type=!Player] ~ ~ ~ detect ~ ~ ~ minecraft:red_mushroom 0 /summon Creeper ~ ~ ~ {CustomName:"fire shroom",CustomNameVisible:0,ignited:1,Fuse:1,Invulnerable:1,NoAI:1,Silent:1,ActiveEffects:[{Id:14,Amplifier:0,Duration:200,ShowParticles:0b}]}
+/execute @e[type=!Player] ~ ~ ~ detect ~ ~ ~ minecraft:red_flower 0 /summon Creeper ~ ~ ~ {CustomName:"fire shroom",CustomNameVisible:0,ignited:1,Fuse:1,Invulnerable:1,NoAI:1,Silent:1,ActiveEffects:[{Id:14,Amplifier:0,Duration:200,ShowParticles:0b}]}

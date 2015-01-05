@@ -1,0 +1,83 @@
+Scoreboard Info
+===============
+
+/scoreboard players list
+/scoreboard players list koden_km
+/scoreboard objectives setdisplay sidebar IsPlayer
+/scoreboard players set @p IsPlayer 0
+/scoreboard players reset @p IsPlayer
+
+
+
+Scoreboard Objectives
+=====================
+
+Make sure there is a command block to create all these in the main command room.
+Some have been added here, but not yet created in game.
+
+
+
+Misc Objectives
+===============
+
+# Integer - Counts up from any value.
+/scoreboard objectives add EventFrame dummy
+# Boolean
+/scoreboard objectives add EventIntro dummy
+
+# Integer - Starts high and counts down. Stops when zero.
+/scoreboard objectives add MoveNorth dummy
+/scoreboard objectives add MoveSouth dummy
+/scoreboard objectives add MoveEast dummy
+/scoreboard objectives add MoveWest dummy
+
+
+
+NPC Objectives
+==============
+
+# Add objectives to track conversations and game state.
+
+
+
+Player Objectives
+=================
+
+# Boolean
+/scoreboard objectives add IsPlayer dummy
+
+# Boolean
+/scoreboard objectives add MetDevon dummy
+/scoreboard objectives add MetTarna dummy
+
+
+
+Keyring Keys
+============
+
+Might prefix these with 'Has' or just 'K' instead?
+# Boolean
+
+Doors
+-----
+/scoreboard objectives add KeyVaultKey dummy
+/scoreboard objectives add KeyArmoryKey dummy
+/scoreboard objectives add KeyBedChamberKey dummy
+/scoreboard objectives add KeyRoyalKey dummy
+/scoreboard objectives add KeyGuardhouseKey dummy
+/scoreboard objectives add KeyLakeHouseKey dummy
+
+Chests (not currently doing keyring support)
+--------------------------------------------
+/scoreboard objectives add KeyRustyKey dummy
+/scoreboard objectives add KeyStudyKey dummy
+/scoreboard objectives add KeyCofferKey dummy
+/scoreboard objectives add KeyStainedKey dummy
+
+
+
+Spells and Effects
+==================
+
+# Integer - Starts high and counts down. Is disabled when zero.
+/scoreboard objectives add SpDetectPortal dummy

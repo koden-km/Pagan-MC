@@ -1,0 +1,8 @@
+Game Items/Objects
+==================
+
+
+Bedroll
+-------
+Placeholder book that just gives blindness. This should set command flags. eg. Check for mobs, give slowness, blindness and regen.
+/give @p minecraft:written_book 1 0 {display:{Name:Bedroll,Lore:[A bedroll for sleeping.]},title:'Bedroll',author:'Devon',generation:0,pages:["{text:'Rest for how many periods of time?\n',color:gold,clickEvent:{action:'run_command',value:'/effect @p minecraft:blindness 0 0 true'},extra:[{text:'* 0, ',color:dark_red},{text:'* 1, ',color:dark_red,clickEvent:{action:'run_command',value:'/effect @p minecraft:blindness 10 0 true'}},{text:'* 2, ',color:dark_red,clickEvent:{action:'run_command',value:'/effect @p minecraft:blindness 20 0 true'}},{text:'* 3, ',color:dark_red,clickEvent:{action:'run_command',value:'/effect @p minecraft:blindness 30 0 true'}},{text:'* 4, ',color:dark_red,clickEvent:{action:'run_command',value:'/effect @p minecraft:blindness 40 0 true'}},{text:'* 5, ',color:dark_red,clickEvent:{action:'run_command',value:'/effect @p minecraft:blindness 50 0 true'}}]}"]}

@@ -1,0 +1,64 @@
+NPCs
+========
+
+
+Armina
+-------
+House:
+/summon Villager ~0 ~3.5 ~0 {CustomName:"Aramina",CustomNameVisible:1,Profession:1,Career:0,CareerLevel:20,Offers:{Recipes:[{maxUses:2147483647,uses:0,buy:{id:melon_seeds,Count:2},sell:{id:potion,Count:1}},{maxUses:2147483647,uses:0,buy:{id:melon_seeds,Count:2},sell:{id:baked_potato,Count:1}}]},Age:500000,Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[0f,0f],PersistenceRequired:1}
+
+
+Darion
+-------
+Docks cutscene 1:
+/summon PigZombie ~ ~7.5 ~19 {CustomName:"Darion",CustomNameVisible:1,Equipment:[{},{id:iron_boots,Count:1},{id:iron_leggings,Count:1},{id:iron_chestplate,Count:1},{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[-45f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+House:
+/summon PigZombie ~ ~3.5 ~ {CustomName:"Darion",CustomNameVisible:1,Equipment:[{id:iron_sword,Count:1},{id:iron_boots,Count:1},{id:iron_leggings,Count:1},{id:iron_chestplate,Count:1},{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[0f,0f],PersistenceRequired:1,NoAI:0,Silent:1}
+
+
+Mordea
+-------
+Docks cutscene 1:
+/summon PigZombie ~-0.8 ~7.5 ~18 {CustomName:"Mordea",CustomNameVisible:1,Equipment:[{},{id:leather_boots,Count:1,tag:{display:{color:16777215}}},{id:leather_leggings,Count:1,tag:{display:{color:16777215}}},{id:leather_chestplate,Count:1,tag:{display:{color:16777215}}},{id:golden_helmet,Count:1}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[90f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+Castle:
+/summon PigZombie ~0.5 ~1.5 ~ {CustomName:"Mordea",CustomNameVisible:1,Equipment:[{},{id:leather_boots,Count:1,tag:{display:{color:16777215}}},{id:leather_leggings,Count:1,tag:{display:{color:16777215}}},{id:leather_chestplate,Count:1,tag:{display:{color:16777215}}},{id:golden_helmet,Count:1}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[0f,0f],PersistenceRequired:1,NoAI:0,Silent:1}
+
+
+Rhian
+-------
+Docks cutscene 1:
+/summon Villager ~-1 ~7.5 ~16 {CustomName:"Rhian",CustomNameVisible:1,Profession:3,Career:0,CareerLevel:20,Offers:{Recipes:[{maxUses:2147483647,uses:0,buy:{id:gold_nugget,Count:1},sell:{id:melon_seeds,Count:2}}]},Age:500000,Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[-25f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+House:
+/summon Villager ~0 ~3.5 ~0 {CustomName:"Rhian",CustomNameVisible:1,Profession:3,Career:0,CareerLevel:20,Offers:{Recipes:[{maxUses:2147483647,uses:0,buy:{id:gold_nugget,Count:1},sell:{id:melon_seeds,Count:2}},{maxUses:2147483647,uses:0,buy:{id:emerald,Count:1},sell:{id:melon_seeds,Count:3}},{maxUses:2147483647,uses:0,buy:{id:prismarine_shard,Count:1},sell:{id:melon_seeds,Count:4}},{maxUses:2147483647,uses:0,buy:{id:prismarine_crystals,Count:1},sell:{id:melon_seeds,Count:5}},{maxUses:2147483647,uses:0,buy:{id:melon_seeds,Count:7},sell:{id:leather_chestplate,Count:1,tag:{display:{Name:Clothes,color:11010048}}}},{maxUses:2147483647,uses:0,buy:{id:melon_seeds,Count:7},sell:{id:leather_chestplate,Count:1,tag:{display:{Name:Clothes,color:43008}}}},{maxUses:2147483647,uses:0,buy:{id:melon_seeds,Count:7},sell:{id:leather_chestplate,Count:1,tag:{display:{Name:Clothes,color:168}}}}]},Age:500000,Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[0f,0f],PersistenceRequired:1}
+
+
+Salkind
+-------
+Docks cutscene 1:
+/summon Villager ~-1.5 ~7.5 ~20.5 {CustomName:"Salkind",CustomNameVisible:1,Profession:2,Career:0,CareerLevel:20,Offers:{Recipes:[{maxUses:2147483647,uses:0,buy:{id:melon_seeds,Count:10},sell:{id:paper,Count:1,tag:{display:{Name:Tax receipt}}}}]},Age:500000,Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[80f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+House:
+/summon Villager ~ ~4.5 ~ {CustomName:"Salkind",CustomNameVisible:1,Profession:2,Career:0,CareerLevel:20,Offers:{Recipes:[{maxUses:2147483647,uses:0,buy:{id:melon_seeds,Count:10},sell:{id:paper,Count:1,tag:{display:{Name:Tax receipt}}}}]},Age:500000,Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[0f,0f],PersistenceRequired:1,NoAI:0,Silent:0}
+
+
+Shaana
+------
+Docks cutscene 1:
+/summon PigZombie ~1 ~7.5 ~21.5 {CustomName:"Shaana",CustomNameVisible:1,Equipment:[{id:iron_axe,Count:1},{id:leather_boots,Count:1,tag:{display:{color:2368548}}},{id:leather_leggings,Count:1,tag:{display:{color:2368548}}},{id:leather_chestplate,Count:1,tag:{display:{color:2368548}}},{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[-90f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+House:
+/summon PigZombie ~ ~3.5 ~ {CustomName:"Shaana",CustomNameVisible:1,Equipment:[{id:iron_axe,Count:1},{id:leather_boots,Count:1,tag:{display:{color:2368548}}},{id:leather_leggings,Count:1,tag:{display:{color:2368548}}},{id:leather_chestplate,Count:1,tag:{display:{color:2368548}}},{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[-0f,0f],PersistenceRequired:1,NoAI:0,Silent:1}
+
+
+Tarna
+-------
+Docks cutscene 1:
+/summon PigZombie ~-1 ~7.5 ~16 {CustomName:"Tarna",CustomNameVisible:1,Equipment:[{id:iron_hoe,Count:1,tag:{display:{Name:Halberd}}},{id:iron_boots,Count:1},{id:leather_leggings,Count:1,tag:{display:{color:3158064}}},{id:leather_chestplate,Count:1,tag:{display:{color:2173066}}},{id:iron_helmet,Count:1}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[0f,0f],PersistenceRequired:1,NoAI:1,Silent:1}
+House:
+/summon PigZombie ~ ~3.5 ~ {CustomName:"Tarna",CustomNameVisible:1,Equipment:[{id:iron_hoe,Count:1,tag:{display:{Name:Halberd}}},{id:iron_boots,Count:1},{id:leather_leggings,Count:1,tag:{display:{color:3158064}}},{id:leather_chestplate,Count:1,tag:{display:{color:2173066}}},{id:iron_helmet,Count:1}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[0f,0f],PersistenceRequired:1,NoAI:0,Silent:1}
+
+
+Toran
+-------
+Docks cutscene 1:
+/summon ArmorStand ~ ~7.5 ~21 {CustomName:"Toran",CustomNameVisible:1,ShowArms:1,Invulnerable:1,NoBasePlate:1,NoGravity:1,PersistenceRequired:1,Equipment:[{},{id:leather_boots,Count:1,tag:{display:{color:4334090}}},{id:leather_leggings,Count:1,tag:{display:{color:15234590}}},{id:leather_chestplate,Count:1,tag:{display:{color:16384}}},{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}],Pose:{Body:[0f,0f,0f],LeftArm:[45f,0f,25f],RightArm:[45f,0f,-25f],LeftLeg:[10f,0f,0f],RightLeg:[-10f,0f,0f],Head:[0f,0f,0f]},DisabledSlots:2039583}
+
+

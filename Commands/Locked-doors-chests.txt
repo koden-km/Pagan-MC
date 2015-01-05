@@ -1,0 +1,30 @@
+Keys
+----
+
+Give key for testing:
+/give @p minecraft:tripwire_hook 1 0 {display:{Name:Door Key}}
+
+
+Locked Doors
+------------
+
+/testfor @a[r=4] {SelectedItem:{id:"minecraft:tripwire_hook",tag:{display:{Name:"Door Key"}}}}
+/testfor @a[r=5,score_KeyDoorKey_min=1] {SelectedItem:{id:"minecraft:tripwire_hook",tag:{display:{Name:"Keyring"}}}}
+
+/scoreboard objectives add KeyDoorKey dummy
+/scoreboard objectives setdisplay sidebar KeyDoorKey
+/scoreboard players set @p KeyDoorKey 0
+/scoreboard players set @p KeyDoorKey 1
+
+
+Locked Chests
+-------------
+
+Lock (do both sides of chest):
+/blockdata ~ ~5 ~2 {Lock:"Rusty Key"}
+
+Unlock (do both sides of chest):
+/blockdata ~ ~5 ~ {Lock:""}
+
+Explosion Trap:
+/summon Creeper ~-1.5 ~5.5 ~ {CustomName:"trapped chest",CustomNameVisible:0,ignited:1,Fuse:1,Invulnerable:1,NoAI:1,Silent:1,ActiveEffects:[{Id:14,Amplifier:0,Duration:200,ShowParticles:0b}]}

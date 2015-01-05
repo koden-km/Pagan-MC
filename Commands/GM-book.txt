@@ -1,0 +1,161 @@
+GM/Dev Book
+===========
+
+# One line.
+/give @p[m=1] minecraft:written_book 1 0 {title:'GM Book',author:'koden_km',generation:0,pages:["{text:'Game Mode\n',color:dark_blue,bold:true,extra:[{text:'C, ',color:black,bold:false,hoverEvent:{action:'show_text',value:'Creative'},clickEvent:{action:'run_command',value:'/gamemode c @p'}},{text:'A, ',color:black,bold:false,hoverEvent:{action:'show_text',value:'Adventure'},clickEvent:{action:'run_command',value:'/gamemode a @p'}},{text:'S, ',color:black,bold:false,hoverEvent:{action:'show_text',value:'Survival'},clickEvent:{action:'run_command',value:'/gamemode s @p'}},{text:'Sp\n',color:black,bold:false,hoverEvent:{action:'show_text',value:'Spectator'},clickEvent:{action:'run_command',value:'/gamemode sp @p'}},{text:'\nWeather\n',color:dark_blue,bold:true},{text:'C, ',color:black,bold:false,hoverEvent:{action:'show_text',value:'Clear'},clickEvent:{action:'run_command',value:'/weather clear 50000'}},{text:'R, ',color:black,bold:false,hoverEvent:{action:'show_text',value:'Rain'},clickEvent:{action:'run_command',value:'/weather rain 50000'}},{text:'T\n',color:black,bold:false,hoverEvent:{action:'show_text',value:'Thunder'},clickEvent:{action:'run_command',value:'/weather thunder 50000'}}]}","{text:'Locations\n',color:dark_blue,bold:true,extra:[{text:'* World Spawn\n',color:black,bold:false,clickEvent:{action:'run_command',value:'/tp @p -76 250 1380 180 0'}},{text:'* Command Room\n',color:black,bold:false,clickEvent:{action:'run_command',value:'/tp @p -59 3 1385 0 0'}},{text:'* Beach\n',color:black,bold:false,clickEvent:{action:'run_command',value:'/tp @p -83 64 1249 90 0'}},{text:'* Castle\n',color:black,bold:false,clickEvent:{action:'run_command',value:'/tp @p -120 71 1057 180 0'}}]}"]}
+
+
+# Split up for easy editing. Should still be able to copy and paste this into the Command Block box?
+/give @p[m=1] minecraft:written_book 1 0 {
+	title:'GM Book',
+	author:'koden_km',
+	generation:0,
+	pages:[
+		"{
+			text:'Game Mode\n',
+			color:dark_blue,
+			bold:true,
+			extra:[
+				{
+					text:'C, ',
+					color:black,
+					bold:false,
+					hoverEvent:{
+						action:'show_text',
+						value:'Creative'
+					},
+					clickEvent:{
+						action:'run_command',
+						value:'/gamemode c @p'
+					}
+				},
+				{
+					text:'A, ',
+					color:black,
+					bold:false,
+					hoverEvent:{
+						action:'show_text',
+						value:'Adventure'
+					},
+					clickEvent:{
+						action:'run_command',
+						value:'/gamemode a @p'
+					}
+				},
+				{
+					text:'S, ',
+					color:black,
+					bold:false,
+					hoverEvent:{
+						action:'show_text',
+						value:'Survival'
+					},
+					clickEvent:{
+						action:'run_command',
+						value:'/gamemode s @p'
+					}
+				},
+				{
+					text:'Sp\n',
+					color:black,
+					bold:false,
+					hoverEvent:{
+						action:'show_text',
+						value:'Spectator'
+					},
+					clickEvent:{
+						action:'run_command',
+						value:'/gamemode sp @p'
+					}
+				},
+				{
+					text:'\nWeather\n',
+					color:dark_blue,
+					bold:true
+				},
+				{
+					text:'C, ',
+					color:black,
+					bold:false,
+					hoverEvent:{
+						action:'show_text',
+						value:'Clear'
+					},
+					clickEvent:{
+						action:'run_command',
+						value:'/weather clear 50000'
+					}
+				},
+				{
+					text:'R, ',
+					color:black,
+					bold:false,
+					hoverEvent:{
+						action:'show_text',
+						value:'Rain'
+					},
+					clickEvent:{
+						action:'run_command',
+						value:'/weather rain 50000'
+					}
+				},
+				{
+					text:'T\n',
+					color:black,
+					bold:false,
+					hoverEvent:{
+						action:'show_text',
+						value:'Thunder'
+					},
+					clickEvent:{
+						action:'run_command',
+						value:'/weather thunder 50000'
+					}
+				}
+			]
+		}",
+		"{
+			text:'Locations\n',
+			color:dark_blue,
+			bold:true,
+			extra:[
+				{
+					text:'* World Spawn\n',
+					color:black,
+					bold:false,
+					clickEvent:{
+						action:'run_command',
+						value:'/tp @p -76 250 1380 180 0'
+					}
+				},
+				{
+					text:'* Command Room\n',
+					color:black,
+					bold:false,
+					clickEvent:{
+						action:'run_command',
+						value:'/tp @p -59 3 1385 0 0'
+					}
+				},
+				{
+					text:'* Beach\n',
+					color:black,
+					bold:false,
+					clickEvent:{
+						action:'run_command',
+						value:'/tp @p -83 64 1249 90 0'
+					}
+				},
+				{
+					text:'* Castle\n',
+					color:black,
+					bold:false,
+					clickEvent:{
+						action:'run_command',
+						value:'/tp @p -120 71 1057 180 0'
+					}
+				}
+			]
+		}"
+	]
+}

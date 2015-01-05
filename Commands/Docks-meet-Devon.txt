@@ -1,0 +1,228 @@
+Docks: Meet Devon first time
+============================
+
+# Summon Devon the fisherman
+/summon PigZombie ~ ~9.5 ~ {CustomName:"Devon",CustomNameVisible:1,Equipment:[{id:fishing_rod,Count:2},{id:leather_boots,Count:1,tag:{display:{color:4535594}}},{id:leather_leggings,Count:1,tag:{display:{color:7227446}}},{id:leather_chestplate,Count:1,tag:{display:{color:12233585}}},{id:skull,Damage:3,Count:1,tag:{SkullOwner:MHF_Villager}}],Attributes:[{Name:generic.movementSpeed,Base:0}],Invulnerable:1,Rotation:[180f,0f],PersistenceRequired:1,Silent:1}
+
+# Kill Devon the fisherman
+/kill @e[type=PigZombie,r=30,name=Devon]
+
+
+Hopper clock
+---------------------------
+This clock controls Devon idle and first time meet sequence.
+
+# Clock speed
+/blockdata ~2 ~ ~ {TransferCooldown:80}
+/blockdata ~-2 ~ ~ {TransferCooldown:80}
+
+# Play Villager idle sound. Devon is a silent Pig Zombie, so make him sound like a vilalger.
+/execute @e[type=PigZombie,r=30,name=Devon] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+
+# Teleport Devon back to position incase he gets pushed away
+/tp @e[r=30,name=Devon] -88 64 1250
+
+
+
+Player first time meet Devon
+============================
+
+/testfor @p[m=2,r=20,c=1,score_IsPlayer_min=1,score_MetDevon=0] {}
+^ Comparitor output:
+/setblock ~-2 ~ ~ minecraft:redstone_block
+# The redstone block command above will run the Devon meet sequence. Its done with a setblock so it open happens once.
+# This should be changed so many players can do the first part of meeting Devon, and only the last part about the gathering on the Docks is done once.
+
+
+# Turn Devon to face newly spawned player.
+/tp @e[type=PigZombie,r=40,name=Devon] ~ ~ ~ 270 0
+
+
+# Devon greet
+/tellraw @a[r=50] {"text":"<Devon> ","extra":[{"text":"Hello there.","color":"dark_green"}]}
+/execute @e[r=50,name=Devon] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 20
+<repeater @4>
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 0
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Avatar reply
+/execute @e[r=50,name=Devon] ~ ~ ~ /tellraw @a[r=16] {"text":"<Avatar> ","extra":[{"text":"Who are you?","color":"dark_red"}]}
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Devon chat
+/tellraw @a[r=50] {"text":"<Devon> ","extra":[{"text":"I am Devon, my strange friend. And I am glad to see you are feeling better, Avatar.","color":"dark_green"}]}
+/execute @e[r=50,name=Devon] ~ ~ ~ /playsound mob.villager.yes @a[r=16]
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 20
+<repeater @4>
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 0
+# Set MetDevon score flag
+# Set player MetDevon scrore flag
+/execute @e[r=50,name=Devon] ~ ~ ~ /scoreboard players set @a[r=16] MetDevon 1
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Avatar reply
+/execute @e[r=50,name=Devon] ~ ~ ~ /tellraw @a[r=16] {"text":"<Avatar> ","extra":[{"text":"How do you know my name?","color":"dark_red"}]}
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Devon chat
+/tellraw @a[r=50] {"text":"<Devon> ","extra":[{"text":"I am sorry, I did not mean to pry, but when I found you, I knew not who you were. I am afraid I read through your logbook and discovered your name. Please forgive me.","color":"dark_green"}]}
+/execute @e[r=50,name=Devon] ~ ~ ~ /playsound mob.villager.haggle @a[r=16]
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 20
+<repeater @4>
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 0
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Avatar reply
+/execute @e[r=50,name=Devon] ~ ~ ~ /tellraw @a[r=16] {"text":"<Avatar> ","extra":[{"text":"Where am I?","color":"dark_red"}]}
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Devon chat
+/tellraw @a[r=50] {"text":"<Devon> ","extra":[{"text":"Why, on the shore, friend, safe now and thankfully alive.","color":"dark_green"}]}
+/execute @e[r=50,name=Devon] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 20
+<repeater @4>
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 0
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Avatar reply
+/execute @e[r=50,name=Devon] ~ ~ ~ /tellraw @a[r=16] {"text":"<Avatar> ","extra":[{"text":"Goodbye.","color":"dark_red"}]}
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+
+# Devon chat
+/tellraw @a[r=50] {"text":"<Devon> ","extra":[{"text":"Farewell, friend Avatar, and good luck. You are welcome to stay with me for as long as you need. My food and provisions are yours until you wish to head to the city.","color":"dark_green"}]}
+/execute @e[r=50,name=Devon] ~ ~ ~ /playsound mob.villager.haggle @a[r=16]
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 20
+<repeater @4>
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 0
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Devon starting turning, face the sea.
+/tp @e[type=PigZombie,r=50,name=Devon] ~ ~ ~ 0 0
+# Devon chat
+/tellraw @a[r=50] {"text":"<Devon> ","extra":[{"text":"And be careful in your travels, for i fear you will encounter much voilence.","color":"dark_green"}]}
+/execute @e[r=50,name=Devon] ~ ~ ~ /playsound mob.villager.idle @a[r=16]
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 20
+<repeater @4>
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 0
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+Below here should only ever happen once globally
+------------------------------------------------
+
+
+# Devon finish turning, now facing the docks.
+/tp @e[type=PigZombie,r=50,name=Devon] ~ ~ ~ 90 0
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+<repeater @4>
+
+
+# Devon chat
+/tellraw @a[r=50] {"text":"<Devon> ","extra":[{"text":"I can already see a crowd gathering there on the docks. That can only mean trouble.","color":"dark_green"}]}
+/execute @e[r=50,name=Devon] ~ ~ ~ /playsound mob.villager.no @a[r=16]
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 20
+<repeater @4>
+/tp @e[r=50,name=Devon] ~ ~ ~ ~ 0
+
+
+# Redstone signal needs to now enable the Docks first cut scene sequence clock.
